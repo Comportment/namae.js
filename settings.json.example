@@ -1,0 +1,19 @@
+{
+    "token": "",
+    "prefix": "?",
+    "owner": [
+        "139457768120647680"
+    ],
+    "db": {
+        "dialect": "postgres",
+        "hostname": "localhost",
+        "logging": false,
+        "port": 5432,
+        "username": "namae",
+        "password": "password",
+        "database": "namae"
+    },
+    "commandGroups": [
+        ["utils", "Utils"]
+    ]
+}

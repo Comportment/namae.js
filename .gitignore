@@ -1,4 +1,5 @@
 node_modules/
 .vscode
 *.iml
-settings.yml
+settings.json
+data.db
