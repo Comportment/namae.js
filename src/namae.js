@@ -22,7 +22,8 @@ module.exports = class Namae {
             disableEveryone: true,
             unknownCommandResponse: false
         });
-this.client
+        
+        this.client
             .on('error', (err) => winston.error(`${err}`))
             .on('warn', () => winston.warn)
             .once('ready', () => {
