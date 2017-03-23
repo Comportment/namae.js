@@ -2,7 +2,7 @@ global.Promise = require('bluebird');
 
 // Dependencies
 const path = require('path');
-const config = require('../settings');
+const config = require('../settings.json');
 const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
@@ -22,7 +22,7 @@ module.exports = class Namae {
             disableEveryone: true,
             unknownCommandResponse: false
         });
-        
+        console.log(this.client);
         this.client
             .on('error', (err) => winston.error(`${err}`))
             .on('warn', () => winston.warn)

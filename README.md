@@ -8,6 +8,7 @@ Feature | Description | Complete?
 ------------- | ------------- | -------------
 Basic bot | Discord.js startup | ✔️️
 External Database | Using sequelize as an ORM, we can use an external database | ✔️️
+Fun Commands | Fun commands, nerdy commands, progammic commands. | ✔️️ [Ongoing]
 Ticket System | Bug reports and such | ❌
 REST API | Sure. Why not. | ❌
 Admin Panel | Again. Why not. | ❌
