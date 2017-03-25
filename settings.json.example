@@ -16,8 +16,21 @@
     "commandGroups": [
         ["utils", "Utils"]
     ],
+    "commandGroups": [
+        ["utils", "Utils"],
+        ["nerd", "Nerd"],
+        ["tickets", "Tickets"]
+    ],
     "tickets": {
-        "reportToDev": true,
-        "devId": "139457768120647680"
+        "reportToChannel": true,
+        "channelId": "139457768120647680"
+    },
+    "google": {
+        "apiKey": "",
+        "music": {
+            "defaultVolume": 1,
+            "maxSongs": 6,
+            "requiredVoteSkip": 2
+        }
     }
 }
