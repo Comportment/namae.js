@@ -6,5 +6,15 @@
         "es6": true,
         "node": true
     },
-    "extends": "airbnb"
+    "rules": {
+         "indent": [
+            4,
+            "space"
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "linebreak-style": ["error", "windows"]
+    }
 }
