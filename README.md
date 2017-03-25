@@ -21,6 +21,7 @@ Factoids | Factoids you can use lua/js for custom commands (in a sandbox) | ❌
 Documentaion Generator | Create my own API for handling outside discord.js things | ❌
 Weather Command | Ehh. This one is easy. I'm just lazy | ❌
 RPG Minigame? | Roleplay minigame engine w/ profile system | ❌
+World Domintation | Take over the world, no the galaxy! | ❌
 
 
 
