@@ -1,12 +1,6 @@
-const {
-    Command
-} = require('discord.js-commando');
-const {
-    RichEmbed
-} = require('discord.js');
-const {
-    oneLine
-} = require('common-tags');
+const { Command } = require('discord.js-commando');
+const { RichEmbed} = require('discord.js');
+const { oneLine } = require('common-tags');
 
 const moment = require('moment');
 const winston = require('winston');
