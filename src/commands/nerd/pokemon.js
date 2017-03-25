@@ -7,7 +7,7 @@ module.exports = class HarryPotterCommand extends Command {
             name: 'nerd-pokemon',
             aliases: ['nerd-poke', 'pkn'],
             group: 'nerd',
-            memberName: 'nerd-pokemon',
+            memberName: 'pokemon',
             description: '**Nerds**: A framework for generating data about favorite nerdy topics. Pokemon *nerds*',
             throttling: {
                 usages: 2,

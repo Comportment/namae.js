@@ -7,7 +7,7 @@ module.exports = class TestCommand extends Command {
             name: 'test',
             aliases: ['example'],
             group: 'utils',
-            memberName: 'test',
+            memberName: 'testcommand',
             description: 'a test command?',
             args: [{
                 key: 'argument',

@@ -3,3 +3,5 @@ node_modules/
 *.iml
 settings.json
 data.db
+stuff/
+npm-*.log
