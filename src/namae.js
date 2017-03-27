@@ -17,19 +17,25 @@ module.exports = class Namae {
      * Client constructor
      */
     constructor() {
+
         this.client = new CommandoClient({
             owner: config.owners,
             commandPrefix: config.prefix,
             disableEveryone: true,
             unknownCommandResponse: false
         });
+
         this.client
             .on('error', (err) => winston.error(`${err}`))
             .on('warn', () => winston.warn)
             .once('ready', () => {
-                winston.info(`Bot ready. Logged in as ${this.client.user.username}#${this.client.user.discriminator}`)
+                winston.info(`Bot ready. Logged in as ${this.client.user.username}#${this.client.user.discriminator}`);
+                redis.db.publish('namae.bot.event', 'event:ready!');
             })
-            .on('disconnect', () => winston.warn('Bot disconnected.'))
+            .on('disconnect', () => { 
+                winston.warn('Bot disconnected.');
+                redis.db.publish('namae.bot.event', 'event:disconnected');
+            })
             .on('reconnect', () => winston.warn('Reconnecting to Discord...'))
 
             .on('commandRun', (command, promise, message, args) => {
@@ -39,8 +45,8 @@ module.exports = class Namae {
                     ${message.guild ? `${message.guild.name}` : 'Private Message'}.
                 `);
                 redis.db.publish('namae.bot.command', oneLine`
-                    ${message.guild.id}:${message.author.username}#${message.author.discriminator} ${command.memberName}
-                `)
+                    ${message.guild.id}:${message.author.username}#${message.author.discriminator}:${command.memberName}
+                `);
             })
             .on('commandError', (command, error) => {
                 if (error instanceof FriendlyError)
@@ -96,7 +102,6 @@ module.exports = class Namae {
         process.on('unhandledRejection', (err) => {
             winston.error(`Uncaught Promise: \n${err.stack}`);
         });
-
-
+        redis.start();
     }
 }

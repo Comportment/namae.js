@@ -1,5 +1,6 @@
 # Namae
 A public, example Discord.JS bot with discord.js-commando for the command framework. This bot is new and is a work in progress.
+Under certain circumstances, messages may be logged under certain conditions (commands are sent to redis when triggered for web panel purposes.)
 
 ## Todo
 Some of these are probably not possible, but a boy can dream.
