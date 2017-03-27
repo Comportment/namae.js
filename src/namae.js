@@ -6,6 +6,7 @@ const config = require('../settings.json');
 const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
+const redis = require('./database/redis');
 
 const { oneLine } = require('common-tags');
 const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
@@ -37,6 +38,9 @@ module.exports = class Namae {
                     ${message.author.username}#${message.author.discriminator} in 
                     ${message.guild ? `${message.guild.name}` : 'Private Message'}.
                 `);
+                redis.db.publish('namae.bot.command', oneLine`
+                    ${message.guild.id}:${message.author.username}#${message.author.discriminator} ${command.memberName}
+                `)
             })
             .on('commandError', (command, error) => {
                 if (error instanceof FriendlyError)
@@ -52,6 +56,8 @@ module.exports = class Namae {
                     ticketType: 'bug report',
                     content: error
                 });
+
+                redis.db.publish('namae.bot.error', error.message);
             })
             .on('message', async message => {
                 if (message.channel.type === 'dm') return;
@@ -60,7 +66,7 @@ module.exports = class Namae {
                 winston.info(oneLine`
                     <${message.author.username}#${message.author.discriminator}>
                      ${message.content}
-                `)
+                `);
             })
             .on('debug', winston.info);
 
@@ -90,5 +96,7 @@ module.exports = class Namae {
         process.on('unhandledRejection', (err) => {
             winston.error(`Uncaught Promise: \n${err.stack}`);
         });
+
+
     }
 }
