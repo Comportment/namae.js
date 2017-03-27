@@ -1,7 +1,9 @@
 <div align="center">
     <div class="header">
-        <h1 style="display:inline">namae.js</h1>
-        <span style="float:right">another discord bot</span>
+        <p>
+            <h2 style="display:inline">namae.js</h2>
+            <span style="float:right">another discord bot</span>
+        </p>
     </div>
     <p>
         <a href="https://david-dm.org/truency/namae.js"><img src="https://david-dm.org/truency/namae.js.svg"/></a>
