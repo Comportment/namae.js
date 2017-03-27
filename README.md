@@ -1,5 +1,5 @@
-# Namae
 <div align="center">
+    <h1>namae.js <small>le bot</small></h1>
     <p>
         <a href="https://david-dm.org/truency/namae.js"><img src="https://david-dm.org/truency/namae.js.svg"/></a>
         <a href="https://discordapp.com/invite/g7ZAq"><img src="https://discordapp.com/api/guilds/286955429450481664/embed.png"/></a>
