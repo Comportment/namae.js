@@ -1,5 +1,8 @@
 <div align="center">
-    <h1>namae.js | another discord bot</h1>
+    <div class="header">
+        <h1 style="display:inline">namae.js</h1>
+        <span style="float:right">another discord bot</span>
+    </div>
     <p>
         <a href="https://david-dm.org/truency/namae.js"><img src="https://david-dm.org/truency/namae.js.svg"/></a>
         <a href="https://discordapp.com/invite/g7ZAq"><img src="https://discordapp.com/api/guilds/286955429450481664/embed.png"/></a>
