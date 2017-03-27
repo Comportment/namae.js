@@ -75,11 +75,11 @@ module.exports = class Namae {
             .registerDefaults()
             .registerCommandsIn(path.join(__dirname, 'commands'));
 
-        this.musicModule(this.client, {
+        musicModule(this.client, {
             prefix: '`',
             global: true,
             maxQueueSize: 25,
-            clearInvoker: true,
+            clearInvoker: false,
             musicChannelEnabled: true,
             musicChannelName: 'music',
             useOwners: true,
