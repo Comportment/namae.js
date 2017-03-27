@@ -1,5 +1,15 @@
 # Namae
-A public, example Discord.JS bot with discord.js-commando for the command framework. This bot is new and is a work in progress.
+<div align="center">
+    <p>
+        <a href="https://david-dm.org/truency/namae.js"><img src="https://david-dm.org/truency/namae.js.svg"/></a>
+        <img src="http://forthebadge.com/images/badges/made-with-crayons.svg"/>
+        <img src="http://forthebadge.com/images/badges/built-with-resentment.svg"/>
+        <a href="https://discordapp.com/invite/g7ZAq"><img src="https://discordapp.com/api/guilds/286955429450481664/embed.png"/></a>
+    </p>
+</div>
+
+A public Discord bot. This bot is new and is a work in progress. It has strong ambitions to take over the univ-- I mean have fun and help.
+
 Under certain circumstances, messages may be logged under certain conditions (commands are sent to redis when triggered for web panel purposes.)
 
 ## Todo
