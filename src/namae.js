@@ -7,8 +7,6 @@ const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
 
-const musicModule = require('discord.js-music-v11');
-
 const { oneLine } = require('common-tags');
 const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
 
@@ -75,16 +73,6 @@ module.exports = class Namae {
             .registerDefaults()
             .registerCommandsIn(path.join(__dirname, 'commands'));
 
-        musicModule(this.client, {
-            prefix: '`',
-            global: true,
-            maxQueueSize: 25,
-            clearInvoker: false,
-            musicChannelEnabled: true,
-            musicChannelName: 'music',
-            useOwners: true,
-            owners: config.owners
-        });
     }
 
     /**
