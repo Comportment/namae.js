@@ -6,7 +6,8 @@ const config = require('../settings.json');
 const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
-const redis = require('./database/redis');
+const redisdb = require('./database/redis');
+const redis = new redisdb();
 
 const { oneLine } = require('common-tags');
 const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
@@ -30,11 +31,11 @@ module.exports = class Namae {
             .on('warn', () => winston.warn)
             .once('ready', () => {
                 winston.info(`Bot ready. Logged in as ${this.client.user.username}#${this.client.user.discriminator}`);
-                redis.db.publish('namae.bot.event', 'event:ready!');
+                redis.eventdb.publish('namae.bot.event', 'event:ready!');
             })
             .on('disconnect', () => { 
                 winston.warn('Bot disconnected.');
-                redis.db.publish('namae.bot.event', 'event:disconnected');
+                redis.eventdb.publish('namae.bot.event', 'event:disconnected');
             })
             .on('reconnect', () => winston.warn('Reconnecting to Discord...'))
 
@@ -44,7 +45,7 @@ module.exports = class Namae {
                     ${message.author.username}#${message.author.discriminator} in 
                     ${message.guild ? `${message.guild.name}` : 'Private Message'}.
                 `);
-                redis.db.publish('namae.bot.command', oneLine`
+                redis.eventdb.publish('namae.bot.command', oneLine`
                     ${message.guild.id}:${message.author.username}#${message.author.discriminator}:${command.memberName}
                 `);
             })
@@ -63,7 +64,7 @@ module.exports = class Namae {
                     content: error
                 });
 
-                redis.db.publish('namae.bot.error', error.message);
+                redis.eventdb.publish('namae.bot.error', error.message);
             })
             .on('message', async message => {
                 if (message.channel.type === 'dm') return;
@@ -99,6 +100,7 @@ module.exports = class Namae {
      */
     init() {
         this.client.login(config.token);
+
         process.on('unhandledRejection', (err) => {
             winston.error(`Uncaught Promise: \n${err.stack}`);
         });
