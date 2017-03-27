@@ -7,6 +7,8 @@ const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
 
+const musicModule = require('discord.js-music-v11');
+
 const { oneLine } = require('common-tags');
 const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
 
@@ -22,7 +24,6 @@ module.exports = class Namae {
             disableEveryone: true,
             unknownCommandResponse: false
         });
-        console.log(this.client);
         this.client
             .on('error', (err) => winston.error(`${err}`))
             .on('warn', () => winston.warn)
@@ -73,6 +74,17 @@ module.exports = class Namae {
             .registerGroups(config.commandGroups)
             .registerDefaults()
             .registerCommandsIn(path.join(__dirname, 'commands'));
+
+        this.musicModule(this.client, {
+            prefix: '`',
+            global: true,
+            maxQueueSize: 25,
+            clearInvoker: true,
+            musicChannelEnabled: true,
+            musicChannelName: 'music',
+            useOwners: true,
+            owners: config.owners
+        });
     }
 
     /**
