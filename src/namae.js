@@ -6,6 +6,8 @@ const config = require('../settings.json');
 const ticket = require('./database/models/tickets.js');
 const winston = require('winston');
 const sqlite = require('sqlite');
+const redisdb = require('./database/redis');
+const redis = new redisdb();
 
 const { oneLine } = require('common-tags');
 const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
@@ -16,20 +18,25 @@ module.exports = class Namae {
      * Client constructor
      */
     constructor() {
+
         this.client = new CommandoClient({
             owner: config.owners,
             commandPrefix: config.prefix,
             disableEveryone: true,
             unknownCommandResponse: false
         });
-        console.log(this.client);
+
         this.client
             .on('error', (err) => winston.error(`${err}`))
             .on('warn', () => winston.warn)
             .once('ready', () => {
-                winston.info(`Bot ready. Logged in as ${this.client.user.username}#${this.client.user.discriminator}`)
+                winston.info(`Bot ready. Logged in as ${this.client.user.username}#${this.client.user.discriminator}`);
+                redis.eventdb.publish('namae.bot.event', 'event:ready!');
             })
-            .on('disconnect', () => winston.warn('Bot disconnected.'))
+            .on('disconnect', () => { 
+                winston.warn('Bot disconnected.');
+                redis.eventdb.publish('namae.bot.event', 'event:disconnected');
+            })
             .on('reconnect', () => winston.warn('Reconnecting to Discord...'))
 
             .on('commandRun', (command, promise, message, args) => {
@@ -37,6 +44,9 @@ module.exports = class Namae {
                     Command ${command.memberName}(${command.groupID}) triggered by 
                     ${message.author.username}#${message.author.discriminator} in 
                     ${message.guild ? `${message.guild.name}` : 'Private Message'}.
+                `);
+                redis.eventdb.publish('namae.bot.command', oneLine`
+                    ${message.guild.id}:${message.author.username}#${message.author.discriminator}:${command.memberName}
                 `);
             })
             .on('commandError', (command, error) => {
@@ -53,6 +63,8 @@ module.exports = class Namae {
                     ticketType: 'bug report',
                     content: error
                 });
+
+                redis.eventdb.publish('namae.bot.error', error.message);
             })
             .on('message', async message => {
                 if (message.channel.type === 'dm') return;
@@ -61,7 +73,7 @@ module.exports = class Namae {
                 winston.info(oneLine`
                     <${message.author.username}#${message.author.discriminator}>
                      ${message.content}
-                `)
+                `);
             })
             .on('debug', winston.info);
 
@@ -73,6 +85,7 @@ module.exports = class Namae {
             .registerGroups(config.commandGroups)
             .registerDefaults()
             .registerCommandsIn(path.join(__dirname, 'commands'));
+
     }
 
     /**
@@ -87,8 +100,10 @@ module.exports = class Namae {
      */
     init() {
         this.client.login(config.token);
+
         process.on('unhandledRejection', (err) => {
             winston.error(`Uncaught Promise: \n${err.stack}`);
         });
+        redis.start();
     }
 }
