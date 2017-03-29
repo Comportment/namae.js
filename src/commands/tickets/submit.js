@@ -91,7 +91,7 @@ module.exports = class SubmitCommand extends Command {
                 .setColor(0x00AE86)
                 .setDescription(`**Content**: ${this.ticketMessage(ticket)}`)
                 .setFooter(`${moment().tz('America/New_York').format('LTS')} | Type: ${this.ticketType(ticket)}`);
-            this.client.channels.get(config.tickets.channelId).sendEmbed(embed);
+            this.client.channels.get(config.tickets.channelId).sendMessage(embed);
             message.reply('Ticket submitted!');
         } else {
             message.reply('Ticket submitted, it will be viewed on our panel/system.');
